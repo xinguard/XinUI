@@ -1,7 +1,7 @@
 XinUI
 =====
 
-XinUI is a simple SDN controller UI with Ryu.
+XinUI is a simple UI for Ryu SDN controller.
 
 
 ##Features
