@@ -1,0 +1,4 @@
+Flask==0.10
+networkx==1.8.1
+requests
+ryu==3.6

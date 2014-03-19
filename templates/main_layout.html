@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="XinUI for Ryu controller">
+        <meta name="author" content="Xinguard Inc.">
+        <meta name="keywords" content="OpenFlow, Ryu, SDN">
+        <title>XinUI</title>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/bootstrap.css") }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/xinui.css") }}">
+        <link rel="icon" type="image/png" href="{{ url_for("static", filename="images/favicon.ico") }}">
+
+        <script type="text/javascript" src="{{ url_for("static", filename="js/d3.v3.js") }}" charset="utf-8"></script>
+        <script type="text/javascript" src="{{ url_for("static", filename="js/jquery-2.0.3.js") }}"></script>
+        <script type="text/javascript">
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ url_for("summary") }}"><img src="{{ url_for("static", filename="images/logo.png") }}" alt=""></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url_for("summary") }}">Summary</a></li>
+                        <li><a href="{{ url_for("policy") }}">Flow</a></li>
+                        <li><a href="{{ url_for("topology") }}">Topology</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid min_height">
+                {% block summary %}{% endblock %}
+                {% block policy %}{% endblock %}
+                {% block topology %}{% endblock %}
+        </div>
+        <script type="text/javascript" src="{{ url_for("static", filename="js/bootstrap.js") }}"></script>
+        <script type="text/javascript" src="{{ url_for("static", filename="js/xinui.js") }}"></script>
+        <div id="footer" class="footer_style">Design by <a href="http://xinguard.com/" target="_blank">Xinguard Inc</a>.</div>
+    </body>
+</html>

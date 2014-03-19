@@ -1,0 +1,325 @@
+/*
+ *   Copyright (C) 2014 Xinguard Inc.
+ *
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ */
+
+html{
+    height:100%;
+}
+
+/* For D3.js */
+.node {
+    font: 12px sans-serif;
+    cursor: pointer;
+}
+
+.node circle {
+    fill: #c76a6a;
+    stroke-width: 2.5px;
+}
+
+.link {
+    stroke: #999;
+/*  stroke-opacity: .6;
+*/  stroke-width: 2.5px;
+}
+
+body {
+    height: 100%;
+    padding-top: 50px;
+    background: #f8f8f8;
+}
+
+.label-title, .sw_select_title {
+    font-size: 25px;
+}
+
+.summary-template, .policy-template {
+    padding: 40px 30px;
+}
+/*
+.policy-template {
+    padding: 0px 30px;
+}
+*/
+
+#switch_desc thead th, #switch_desc tbody td {
+   text-align: center; 
+}
+
+.badge {
+    margin-left: 15px;
+}
+
+.sw_select_title {
+    float: left;
+}
+
+#sw_select_drop, #sw_select {
+    margin-left: 15px;
+}
+
+.operate_div {
+    margin-top: -20px;
+}
+
+.operate_btn {
+    margin-left: 20px;
+}
+
+.add_div {
+    margin-top: 20px;
+    margin-left: -30px;
+    margin-right: -40px;
+    /*background-color: rgb(186, 230, 217);*/
+    background-color:#363636;
+}
+
+.common_panel {
+    padding:0 30px;
+    border-bottom: solid #000 1px;
+}
+.common_panel div, .match_panel div, .action_panel div{
+    float:left;
+    margin-right: 30px;
+    margin-top:10px;
+}
+.first_div{
+    margin-left: 64px;
+}
+.common_dropdown {
+    width: 212px;
+}
+
+.common_dropdown li input {
+    width: 135px;
+    float: left;
+    margin-left: 9px;
+}
+
+.common_dropdown li button {
+    margin-left: 15px;
+}
+
+.input_dropdown, .output_dropdown {
+    width: 184px;
+}
+
+.dl_dropdown {
+    width: 415px;
+}
+
+.nw_dropdown {
+    width: 377px;
+}
+
+.l4_proto_dropdown {
+    width: 187px;
+}
+
+.vlan_action_dropdown {
+    width: 243px
+}
+
+.match_panel {
+    padding:0 30px;
+    border-bottom: solid #000 1px;
+}
+
+.action_panel {
+    padding:0 30px;
+    border-bottom: solid #000 1px;  
+}
+
+.panel_title {
+    color: #C7A7A7;
+    font-weight:normal!important;
+    /*
+    text-shadow: 0px 1px 1px #4d4d4d; 
+    color: #222; 
+    */
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: -5px;
+}
+
+.panel_link {
+    display: block;
+    margin-top: -6px;
+}
+
+.input_radio_div, .output_checkbox_div, .vlan_action_radio_div {
+    margin-left: 8px;
+    margin-top: 2px;
+}
+
+#input_btn, #output_btn, #vlan_action_btn {
+    margin-left: 8px;
+    margin-top: 10px;
+}
+
+.dl_saddr_div, .nw_saddr_div, .l4_proto_div, .sport_div {
+    float: left;
+}
+
+.dl_daddr_div, .nw_daddr_div, .dport_div{
+}
+
+.sport_div {
+}
+
+.dl_saddr, .dl_daddr {
+    width: 46px;
+    display: inline;
+}
+
+.dl_dropdown li input:first-child {
+    margin-left: 8px;
+}
+
+#dl_saddr_btn, #dl_daddr_btn {
+    margin-left: 8px;
+}
+
+.nw_saddr, .nw_daddr {
+    width: 50px;
+    display: inline;
+}
+
+.nw_dropdown li input:first-child {
+    margin-left: 8px;
+}
+
+#nw_saddr_btn, #nw_daddr_btn {
+    margin-left: 8px;
+}
+
+.l4_proto_radio_div {
+    margin-left: 8px;
+    margin-top: 2px;
+}
+
+#l4_proto_btn {
+    margin-left: 8px;
+    margin-top: 10px;
+}
+
+
+.vlan_id {
+    width: 60px;
+}
+
+.vlan_action {
+    width: 135px;
+}
+
+.flow_div {
+    /*
+    min-height: 0px;
+    overflow: scroll;
+    */
+    padding-top: 13px;
+}
+
+
+.navbar {
+    background: #1261A5;
+    border:none;
+}
+
+.navbar-inverse .navbar-nav li a {
+    color: #fff;
+}
+.navbar-inverse .navbar-nav li a:hover{
+    color: #EDB95E;
+}
+
+
+.navbar-brand{
+	font-size: 22px;
+	color:#fff!important;
+	padding: 6px 6px
+}
+.navbar-brand img{
+	width: 120px;
+    margin-left: 9px;
+}
+form label{
+    color:#DFDFDF;
+    font-size: 14px;
+    font-weight:normal;
+
+
+}
+.btn-style{
+     width:100px;
+     color:white;
+}
+.btn-success-class{
+    background:#468066;
+    border:none;
+}
+.btn-danger-class{
+    background:#BD514E;
+    border:none;
+}
+
+.apply_div{
+    float: left;
+    margin-left: 27px;
+    margin-bottom: 11px;
+    margin-top: 11px;
+}
+
+#confirm_alert {
+    color: red;
+    margin-left: 27px;
+}
+
+form a{
+    text-decoration: underline!important;
+}
+.footer_style{
+    text-align: center;
+}
+.min_height{
+    min-height: 480px;
+    min-height: 90%
+}
+
+/*
+.switch_div{
+    position: fixed;
+    right: 0;
+    left: 0;
+    padding-left: 30px;
+    background-color: #f8f8f8;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    z-index: 99999;
+}
+*/
+.table_style{
+    background-color:#fff;
+} 
+.table_style > tbody > tr:hover > td{
+    background-color: #d3d3d3;
+}
+

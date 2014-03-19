@@ -1,0 +1,323 @@
+{% extends "main_layout.html" %}
+{% block policy %}
+<div class="policy-template">
+    <div class="switch_div">
+    <div class="operate_div clearfix switch_div_style">
+        <label class="sw_select_title">Switch</label>
+        <div class="sw_select btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="sw_select_drop">
+                {% if dpid %}
+                    <span id="sw_select_title">{{ dpid }}</span>
+                {% else %}
+                    <span id="sw_select_title">Select</span>
+                {% endif %}
+
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" id="sw_select">
+                {% if sw_dpid_list %} 
+                    {% for dpid in sw_dpid_list %}
+                    <li><a href="{{ url_for("dpid_policy", dpid=dpid) }}" id="{{ dpid }}">{{ dpid }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        {% if dpid %}
+            <button type="button" class="btn btn-primary operate_btn" data-toggle="collapse" data-placement="bottom" data-target="#add_panel" title="Add flow">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button type="button" class="btn btn-danger operate_btn" id="delete_btn" data-toggle="tooltip" data-placement="bottom" title="Delete flow" style="display:none">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        {% endif %}
+    </div>
+
+    <div class="add_div collapse clearfix" id="add_panel">
+        <form class="add_form" role="form"> 
+            <div class="common_panel clearfix" >
+                <h4 class="panel_title">Common</h4>
+                <div class="form-group dropdown first_div priority_div">
+                    <label for="priority" >Priority</label>
+                    <a href="#" data-toggle="dropdown" class="panel_link" id="priority_link">1000</a>
+                    <ul class="dropdown-menu common_dropdown" role="menu">
+                        <li>
+                            <input type="text" class="form-control" id="priority">
+                            <button type="button" class="btn btn-primary" id="priority_btn">OK</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group dropdown idle_div">
+                    <label for="idle_timeout">Idle timeout</label>
+                    <a href="#" data-toggle="dropdown" class="panel_link" id="idle_link">0</a>
+                    <ul class="dropdown-menu common_dropdown" role="menu">
+                        <li>
+                            <input type="text" class="form-control" id="idle">
+                            <button type="button" class="btn btn-primary" id="idle_btn">OK</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group dropdown hard_div">
+                    <label for="hard_timeout">Hard timeout</label>
+                    <a href="#" data-toggle="dropdown" class="panel_link" id="hard_link">0</a>
+                    <ul class="dropdown-menu common_dropdown" role="menu">
+                        <li>
+                            <input type="text" class="form-control" id="hard">
+                            <button type="button" class="btn btn-primary" id="hard_btn">OK</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="match_panel clearfix">
+                <h4 class="panel_title">Matches</h4>
+                    <div class="form-group dropdown input_div first_div">
+                        <label for="input_port">Input port</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="input_link">Any</a>
+                        <ul class="dropdown-menu input_dropdown" role="menu">
+                            <li>
+                                <div class="input_radio_div">
+                                    <input type="radio" name="input_radio" id="input_radio0" value="0" checked><span>Any</span>
+                                </div>
+                                {% if port %}
+                                    {% for value in port %}
+                                        {% if loop.index == 1 or loop.index == 6 or loop.index == 11 or loop.index == 16 %}
+                                            <div class="input_radio_div">
+                                        {% endif %}
+                                            <input type="radio" name="input_radio" id="input_radio{{ value["port_no"] }}" value="{{ value["port_no"] }}">
+                                            <span>{{ value["port_no"] }}</span>
+                                        {% if loop.index == 5 or loop.index == 10 or loop.index == 15 or loop.index == 20 %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                <button type="button" class="btn btn-primary" id="input_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown dl_saddr_div">
+                        <label for="dl_saddr">Src MAC addr</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="dl_saddr_link">None</a>
+                        <ul class="dropdown-menu dl_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control dl_saddr" id="dl_saddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_saddr" id="dl_saddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_saddr" id="dl_saddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_saddr" id="dl_saddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_saddr" id="dl_saddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_saddr" id="dl_saddr" maxlength="2">
+                                <button type="button" class="btn btn-primary" id="dl_saddr_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown dl_daddr_div">
+                        <label for="dl_daddr">Dst MAC addr</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="dl_daddr_link">None</a>
+                        <ul class="dropdown-menu dl_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control dl_daddr" id="dl_daddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_daddr" id="dl_daddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_daddr" id="dl_daddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_daddr" id="dl_daddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_daddr" id="dl_daddr" maxlength="2">
+                                <span class="colon">:</span>
+                                <input type="text" class="form-control dl_daddr" id="dl_daddr" maxlength="2">
+                                <button type="button" class="btn btn-primary" id="dl_daddr_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown nw_saddr_div">
+                        <label for="nw_saddr">Src IP addr</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="nw_saddr_link">None</a>
+                        <ul class="dropdown-menu nw_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control nw_saddr" id="nw_saddr" maxlength="3">
+                                <span class="comma">.</span>
+                                <input type="text" class="form-control nw_saddr" id="nw_saddr" maxlength="3">
+                                <span class="comma">.</span>
+                                <input type="text" class="form-control nw_saddr" id="nw_saddr" maxlength="3">
+                                <span class="comma">.</span>
+                                <input type="text" class="form-control nw_saddr" id="nw_saddr" maxlength="3">
+                                <span class="comma">/</span>
+                                <input type="text" class="form-control nw_saddr" id="nw_saddr" maxlength="3">
+                                <button type="button" class="btn btn-primary" id="nw_saddr_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown nw_daddr_div">
+                        <label for="nw_daddr">Dst IP addr</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="nw_daddr_link">None</a>
+                        <ul class="dropdown-menu nw_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control nw_daddr" id="nw_daddr" maxlength="3">
+                                <span class="comma">.</span>
+                                <input type="text" class="form-control nw_daddr" id="nw_daddr" maxlength="3">
+                                <span class="comma">.</span>
+                                <input type="text" class="form-control nw_daddr" id="nw_daddr" maxlength="3">
+                                <span class="comma">.</span>
+                                <input type="text" class="form-control nw_daddr" id="nw_daddr" maxlength="3">
+                                <span class="comma">/</span>
+                                <input type="text" class="form-control nw_daddr" id="nw_daddr" maxlength="3">
+                                <button type="button" class="btn btn-primary" id="nw_daddr_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown l4_proto_div">
+                        <label for="l4_proto">Protocol</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="l4_proto_link">None</a>
+                        <ul class="dropdown-menu l4_proto_dropdown" role="menu">
+                            <li>
+                                <div class="l4_proto_radio_div">
+                                    <input type="radio" name="l4_proto_radio" id="l4_proto0" value="0" checked>
+                                    <span>None</span>
+                                    <input type="radio" name="l4_proto_radio" id="l4_proto1" value="1">
+                                    <span>TCP</span>
+                                    <input type="radio" name="l4_proto_radio" id="l4_proto2" value="2">
+                                    <span>UDP</span>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="l4_proto_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown sport_div" style="display:none">
+                        <label for="sport">Src port</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="sport_link">None</a>
+                        <ul class="dropdown-menu common_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control" id="sport" maxlength="5">
+                                <button type="button" class="btn btn-primary" id="sport_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown dport_div" style="display:none">
+                        <label for="dport">Dst port</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="dport_link">None</a>
+                        <ul class="dropdown-menu common_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control" id="dport" maxlength="5">
+                                <button type="button" class="btn btn-primary" id="dport_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group dropdown vlan_id_div">
+                        <label for="vlan_id">VLAN ID</label>
+                        <a href="#" data-toggle="dropdown" class="panel_link" id="vlan_id_link">None</a>
+                        <ul class="dropdown-menu common_dropdown" role="menu">
+                            <li>
+                                <input type="text" class="form-control" id="vlan_id" maxlength="4">
+                                <button type="button" class="btn btn-primary" id="vlan_id_btn">OK</button>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+            <div class="action_panel clearfix">
+                <h4 class="panel_title">Actions</h4>
+                <div class="form-group dropdown output_div first_div">
+                    <label for="output_port">Output port</label>
+                    <a href="#" data-toggle="dropdown" class="panel_link" id="output_link">Drop</a>
+                    <ul class="dropdown-menu output_dropdown" role="menu">
+                        <li>
+                            {% if port %}
+                                {% for value in port %}
+                                    {% if loop.index == 1 or loop.index == 6 or loop.index == 11 or loop.index == 16 %}
+                                        <div class="output_checkbox_div">
+                                    {% endif %}
+                                        <input type="checkbox" name="output_checkbox" id="checkbox{{ value["port_no"] }}" value="{{ value["port_no"] }}">
+                                        <span>{{ value["port_no"] }}</span>
+                                    {% if loop.index == 5 or loop.index == 10 or loop.index == 15 or loop.index == 20 %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <button type="button" class="btn btn-primary" id="output_btn">OK</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group dropdown vlan_action_div">
+                    <label for="vlan">VLAN</label>
+                    <a href="#" data-toggle="dropdown" class="panel_link" id="vlan_action_link">None</a>
+                    <ul class="dropdown-menu vlan_action_dropdown" role="menu">
+                        <li>
+                            <div class="vlan_action_radio_div">
+                                <input type="radio" name="vlan_action_radio" id="vlan_action0" value="0" checked>
+                                <span>None</span>
+                            </div>
+                            <div class="vlan_action_radio_div">
+                                <input type="radio" name="vlan_action_radio" id="vlan_action1" value="1">
+                                <span>Strip</span>
+                            </div>
+                            <div class="vlan_action_radio_div">
+                                <input type="radio" name="vlan_action_radio" id="vlan_action2" value="2">
+                                <span>Swap</span>
+                                <input type="text" class="form-control vlan_action" id="vlan_action_swap" maxlength="4">
+                            </div>
+                            <div class="vlan_action_radio_div">
+                                <input type="radio" name="vlan_action_radio" id="vlan_action3" value="3">
+                                <span>New</span>
+                                <input type="text" class="form-control vlan_action" id="vlan_action_new" maxlength="4">
+                            </div>
+                            <button type="button" class="btn btn-primary" id="vlan_action_btn">OK</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span id="confirm_alert" style="display:none">New flow entry is not correct</span>
+            <div class="apply_div">
+                <button type="button" class="btn btn-success-class btn-style" id="confirm_btn">Confirm</button>
+                <button type="button" class="btn btn-danger-class btn-style" id="reset_btn">Rest</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    {% if dpid %}
+    <div class="flow_div" id="flow_entry_div" style="display:block">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table_style" id="flow_entry">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" name="flow_checkbox_all" value="">
+                        </th>
+                        <th>Priority</th>
+                        <th>Match</th>
+                        <th>Actions</th>
+                        <th>Byte count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if flow_table %}
+                    {% for key, list in flow_table.iteritems() %}
+                        {% for value in list %}
+                            <tr>
+                                <td><input type="checkbox" name="flow_checkbox" value=""></td>
+                                <td>{{ value["priority"] }}</td>
+                                <td>
+                                    {{ value["match"] }}
+                                    {#
+                                    {% for m_key, m_value in value["match"].iteritems() %}
+                                    <span class="flow_match_key">{{ m_key }}</span>
+                                    <span class="flow_match_value">{{ m_value }}</span>
+                                    {% endfor %}
+                                    #}
+                                </td>
+                                <td>{{ value["actions"] }}</td>
+                                <td>{{ value["byte_count"] }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

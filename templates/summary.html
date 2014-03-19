@@ -1,0 +1,36 @@
+{% extends "main_layout.html" %}
+{% block summary %}
+<div class="summary-template">
+    <label class="label-title">Switch information</label>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table_style" id="switch_desc">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>DPID desc.</th>
+                    <th>HW desc.</th>
+                    <th>Manufacture desc.</th>
+                    <th>Serial num</th>
+                    <th>SW desc.</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if sw_desc %}
+                {% for sw in sw_desc %}
+                    {% for dpid, desc in sw.iteritems() %}
+                        <tr>
+                            <td><a href="{{ url_for("dpid_policy", dpid=dpid) }}">{{ dpid }}</a><span class="badge" data-placement="right" title="Number of flow">{{ desc["flow_num"] }}</span></td>
+                            <td>{{ desc["dp_desc"] }}</td>
+                            <td>{{ desc["hw_desc"] }}</td>
+                            <td>{{ desc["mfr_desc"] }}</td>
+                            <td>{{ desc["serial_num"] }}</td>
+                            <td>{{ desc["sw_desc"] }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
