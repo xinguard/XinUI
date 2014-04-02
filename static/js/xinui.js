@@ -283,25 +283,42 @@ var nw_addr_form_validate = function(nw_addr_data) {
     return false;
 }
 
+var nw_addr_form_cidr_validate = function(nw_addr_data) {
+    var regex = /\d/;
+    if (regex.test(nw_addr_data) && (nw_addr_data >= 0 && nw_addr_data <= 32)) {
+        return true;
+    }
+    return false;
+}
+
 var nw_saddr_form_click = function() {
     $("#nw_saddr_btn").click(function() {
         var ret = "";
         var validate = true;
         for (i = 0; i < 5; i++) {
-            if (nw_addr_form_validate($(".nw_saddr_div ul li input:eq(" + i + ")").val())) {
-                ret += $(".nw_saddr_div ul li input:eq(" + i + ")").val();
-                if (i < 3) {
-                    ret += ".";
-                }
-                else if (i == 3) {
-                    if ($(".nw_saddr_div ul li input:eq(" + (i + 1) + ")").val().length != 0) {
-                        ret += "/";
+            if (i < 4) {
+                if (nw_addr_form_validate($(".nw_saddr_div ul li input:eq(" + i + ")").val())) {
+                    ret += $(".nw_saddr_div ul li input:eq(" + i + ")").val();
+                    if (i < 3) {
+                        ret += ".";
                     }
+                }
+                else {
+                    validate = false;
+                    break;
                 }
             }
             else {
-                validate = false;
-                break;
+                if ($(".nw_saddr_div ul li input:eq(" + i + ")").val().length) {
+                    if (nw_addr_form_cidr_validate($(".nw_saddr_div ul li input:eq(" + i + ")").val())) {
+                        ret += "/";
+                        ret += $(".nw_saddr_div ul li input:eq(" + i + ")").val();
+                    }
+                    else {
+                        validate = false;
+                        break;
+                    }
+                }
             }
         }
 
@@ -325,22 +342,33 @@ var nw_saddr_form_click = function() {
 var nw_daddr_form_click = function() {
     $("#nw_daddr_btn").click(function() {
         var ret = "";
+        var validate = true;
         for (i = 0; i < 5; i++) {
-            if (nw_addr_form_validate($(".nw_daddr_div ul li input:eq(" + i + ")").val())) {
-                ret += $(".nw_daddr_div ul li input:eq(" + i + ")").val();
-                if (i < 3) {
-                    ret += ".";
-                }
-                else if (i == 3) {
-                    if ($(".nw_saddr_div ul li input:eq(" + (i + 1) + ")").val().length != 0) {
-                        ret += "/";
+            if (i < 4) {
+                if (nw_addr_form_validate($(".nw_daddr_div ul li input:eq(" + i + ")").val())) {
+                    ret += $(".nw_daddr_div ul li input:eq(" + i + ")").val();
+                    if (i < 3) {
+                        ret += ".";
                     }
+                }
+                else {
+                    validate = false;
+                    break;
                 }
             }
             else {
-                validate = false;
-                break;
+                if ($(".nw_daddr_div ul li input:eq(" + i + ")").val().length) {
+                    if (nw_addr_form_cidr_validate($(".nw_daddr_div ul li input:eq(" + i + ")").val())) {
+                        ret += "/";
+                        ret += $(".nw_daddr_div ul li input:eq(" + i + ")").val();
+                    }
+                    else {
+                        validate = false;
+                        break;
+                    }
+                }
             }
+
         }
 
         $(".nw_daddr_div ul li input").css("border-color", "");
@@ -634,11 +662,11 @@ var reset_form_click = function() {
         
         $("#sport").val("");
         $("#sport_link").text("None");
-        $("#sport_div").hide();
+        $(".sport_div").hide();
 
         $("#dport").val("");
         $("#dport_link").text("None");
-        $("#dport_div").hide();
+        $(".dport_div").hide();
 
         $("#vlan_id").val("");
         $("#vlan_id_link").text("None");
