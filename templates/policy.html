@@ -79,12 +79,12 @@
                                 </div>
                                 {% if port %}
                                     {% for value in port %}
-                                        {% if loop.index == 1 or loop.index == 6 or loop.index == 11 or loop.index == 16 %}
+                                        {% if loop.index == 1 or loop.index == 6 or loop.index == 11 or loop.index == 16 or loop.index == 21 or loop.index == 26 or loop.index == 31 or loop.index == 36 or loop.index == 41 or loop.index == 46 or loop.index == 51 or loop.index == 56 %}
                                             <div class="input_radio_div">
                                         {% endif %}
                                             <input type="radio" name="input_radio" id="input_radio{{ value["port_no"] }}" value="{{ value["port_no"] }}">
                                             <span>{{ value["port_no"] }}</span>
-                                        {% if loop.index == 5 or loop.index == 10 or loop.index == 15 or loop.index == 20 %}
+                                        {% if loop.index == 5 or loop.index == 10 or loop.index == 15 or loop.index == 20 or loop.index == 25 or loop.index == 30 or loop.index == 35 or loop.index == 40 or loop.index == 45 or loop.index == 50 or loop.index == 55 or loop.index == 60 %}
                                             </div>
                                         {% endif %}
                                     {% endfor %}
@@ -226,12 +226,12 @@
                         <li>
                             {% if port %}
                                 {% for value in port %}
-                                    {% if loop.index == 1 or loop.index == 6 or loop.index == 11 or loop.index == 16 %}
+                                    {% if loop.index == 1 or loop.index == 6 or loop.index == 11 or loop.index == 16 or loop.index == 21 or loop.index == 26 or loop.index == 31 or loop.index == 36 or loop.index == 41 or loop.index == 46 or loop.index == 51 or loop.index == 56 %}
                                         <div class="output_checkbox_div">
                                     {% endif %}
                                         <input type="checkbox" name="output_checkbox" id="checkbox{{ value["port_no"] }}" value="{{ value["port_no"] }}">
                                         <span>{{ value["port_no"] }}</span>
-                                    {% if loop.index == 5 or loop.index == 10 or loop.index == 15 or loop.index == 20 %}
+                                    {% if loop.index == 5 or loop.index == 10 or loop.index == 15 or loop.index == 20 or loop.index == 25 or loop.index == 30 or loop.index == 35 or loop.index == 40 or loop.index == 45 or loop.index == 50 or loop.index == 55 or loop.index == 60 %}
                                         </div>
                                     {% endif %}
                                 {% endfor %}
